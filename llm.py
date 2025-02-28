@@ -60,6 +60,7 @@ if apikey:
 #     label="Enter your Finhubb API code",
 #     value = lukas_fin_api,
 #     help  = " Use this link https://finnhub.io/register \n to get free finhubb api code if original one doesn't work")
+
 st.write("#### Do you have an OPEN AI API KEY?")
 if "show_text_input" not in st.session_state:
     st.session_state.show_text_input = False
