@@ -2,14 +2,14 @@ import streamlit as st
 import pandas as pd
 import requests
 import os
-import finnhub
+# import finnhub
 import pandas
 from datetime import datetime, timedelta
 import re
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
+# from selenium import webdriver
+# from selenium.webdriver.chrome.service import Service
+# from selenium.webdriver.chrome.options import Options
+# from selenium.webdriver.common.by import By
 import time
 from langchain_openai import ChatOpenAI
 from langchain_openai import ChatOpenAI
@@ -53,13 +53,13 @@ else:
 st.title("Due Diligance App")
 
 # Sign in to input finhubb api
-st.write("#### ")
-st.markdown("Check out this [website](%s) to get your free finhubb api code, if the original code doesn't work. " % "https://finnhub.io/register")
-finhubb_api  = st.text_input(
-    label="Enter your Finhubb API code",
-    value = lukas_fin_api,
-    help  = " Use this link https://finnhub.io/register \n to get free finhubb api code if original one doesn't work"
-)
+# st.write("#### ")
+# st.markdown("Check out this [website](%s) to get your free finhubb api code, if the original code doesn't work. " % "https://finnhub.io/register")
+# finhubb_api  = st.text_input(
+#     label="Enter your Finhubb API code",
+#     value = lukas_fin_api,
+#     help  = " Use this link https://finnhub.io/register \n to get free finhubb api code if original one doesn't work")
+
 # Retrieve Open AI API
 st.write("#### ")
 st.markdown("Check out this [website](%s) to get your Open AI API code, if the original code doesn't work. " % "https://platform.openai.com/api-keys")
