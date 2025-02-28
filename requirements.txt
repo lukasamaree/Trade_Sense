@@ -1,6 +1,10 @@
+python==3.10
 finnhub_python==2.4.22
 langchain==0.3.19
 langchain_community==0.3.18
+langchain
+langchain-openai
+openai
 langchain_core==0.3.40
 langchain_openai==0.3.7
 pandas==2.2.3
