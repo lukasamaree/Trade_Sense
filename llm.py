@@ -43,13 +43,15 @@ else:
 # Retrieve ChatGPT API Key
 path1 = "/Users/lukasamare/Desktop/random_project"
 if os.path.exists(path1):
-    with open("openaiapikey", "r") as file:
+    with open(path1+"openaiapikey", "r") as file:
         apikey = file.read().strip()
 else:
     apikey = st.secrets["OPENAI_API_KEY"]
 
 # Make Title for the streamlit app
 st.title("Due Diligance App")
+if apikey:
+    st.write(apikey[:4])
 
 # Sign in to input finhubb api
 # st.write("#### ")
