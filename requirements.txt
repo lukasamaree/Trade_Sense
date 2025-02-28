@@ -2,7 +2,6 @@ finnhub_python==2.4.22
 langchain==0.3.19
 langchain_community==0.3.18
 langchain
-langchain-openai
 openai
 langchain_core==0.3.40
 langchain_openai==0.3.7
@@ -11,19 +10,3 @@ playwright==1.49.1
 Requests==2.32.3
 selenium==4.29.0
 streamlit==1.41.1
-# libnss3
-libnspr4
-libatk1.0-0
-libatk-bridge2.0-0
-libcups2
-libdrm2
-libatspi2.0-0
-libxcomposite1
-libxdamage1
-libxfixes3
-libxrandr2
-libgbm1
-libxkbcommon0
-libpango-1.0-0
-libcairo2
-libasound2
