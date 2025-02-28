@@ -64,7 +64,7 @@ st.write("#### ")
 st.markdown("Check out this [website](%s) to get your Open AI API code, if the original code doesn't work. " % "https://platform.openai.com/api-keys")
 apikey  = st.text_input(
     label="Enter your ChatGPT API",
-    value = apikey,
+    value = "Enter your ChatGPT API",
     help  = " Use this link https://platform.openai.com/api-keys \n to get Open API key if original one doesn't work"
 )
 #Make prompt for specific ticker you want to look up
