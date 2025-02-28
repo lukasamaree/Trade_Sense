@@ -43,7 +43,7 @@ else:
     lukas_fin_api = ''
 
 # Retrieve ChatGPT API Key
-if os.path.exist(path2):
+if os.path.exists(path2):
     with open("api_key", "r") as file:
         apikey = file.read().strip()
 else:
