@@ -43,7 +43,7 @@ else:
 # Retrieve ChatGPT API Key
 path1 = "/Users/lukasamare/Desktop/random_project"
 if os.path.exists(path1):
-    with open("api_key", "r") as file:
+    with open("openaiapikey", "r") as file:
         apikey = file.read().strip()
 else:
     apikey = st.secrets["OPENAI_API_KEY"]
