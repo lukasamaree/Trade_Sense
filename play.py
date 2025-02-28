@@ -6,10 +6,10 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_community.document_loaders import WebBaseLoader
 import os
 
-
 elapsed = time.time()
 
 os.system("playwright install chromium")
+os.system("playwright install")
 
 
 def retrieve_urls_for_docs(ticker):
