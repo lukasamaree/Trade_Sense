@@ -51,7 +51,7 @@ else:
 # Make Title for the streamlit app
 st.title("Due Diligance App")
 if apikey:
-    st.write(apikey[:4])
+    st.write("hey")
 
 # Sign in to input finhubb api
 # st.write("#### ")
