@@ -92,9 +92,10 @@ if st.session_state.show_text_input:
 # Show selected option if No is clicked
 if st.session_state.selected_option == "This bum does not have an API key, GET YOUR BREAD UP AND PAY. jk I have one for you":
     st.write(st.session_state.selected_option)
+    apikey = st.secrets["OPENAI_API_KEY"]
 
 # Retrieve Open AI API
-apikey = st.secrets["OPENAI_API_KEY"]
+
 
 #Make prompt for specific ticker you want to look up
 st.write("#### What stock do you want your DD on?")
