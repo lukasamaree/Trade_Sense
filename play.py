@@ -4,12 +4,10 @@ from langchain_openai import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_community.document_loaders import WebBaseLoader
+
 elapsed = time.time()
 
-ticker = "MP"
 
-with open("api_key", "r") as file:
-    apikey = file.read().strip()
 
 def retrieve_urls_for_docs(ticker):
     url = "https://finance.yahoo.com/quote/" + ticker + "/news/"
@@ -42,7 +40,7 @@ def retrieve_urls_for_docs(ticker):
         # Print extracted links
         return hrefs[:5]
 
-print(retrieve_urls_for_docs(ticker))
+
 
 
 
