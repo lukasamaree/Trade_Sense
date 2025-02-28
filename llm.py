@@ -28,11 +28,9 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_community.document_loaders import WebBaseLoader
 from play import *
 
-# Create path to the chrome driver so that we can webscrape
-path1 = "/Users/lukasamare/Desktop/chromedriver-mac-arm64/chromedriver"
-service= Service(executable_path=path1)
 
-path2 = "/Users/lukasamare/Desktop/random_project"
+
+
 
 # Retrieve original Finhubb API
 path = '/Users/lukasamare/Desktop/fall_module_1/communications/'
@@ -43,7 +41,8 @@ else:
     lukas_fin_api = ''
 
 # Retrieve ChatGPT API Key
-if os.path.exists(path2):
+path1 = "/Users/lukasamare/Desktop/random_project"
+if os.path.exists(path1):
     with open("api_key", "r") as file:
         apikey = file.read().strip()
 else:
