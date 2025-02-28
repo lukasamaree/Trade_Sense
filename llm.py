@@ -60,15 +60,41 @@ if apikey:
 #     label="Enter your Finhubb API code",
 #     value = lukas_fin_api,
 #     help  = " Use this link https://finnhub.io/register \n to get free finhubb api code if original one doesn't work")
+st.write("#### Do you have an OPEN AI API KEY?")
+if "show_text_input" not in st.session_state:
+    st.session_state.show_text_input = False
+if "selected_option" not in st.session_state:
+    st.session_state.selected_option = None
+
+# Buttons for Yes and No
+col1, col2 = st.columns(2)
+with col1:
+    if st.button("Yes"):
+        st.session_state.show_text_input = True
+        st.session_state.selected_option = None  # Reset variable if switching
+
+with col2:
+    if st.button("No"):
+        st.session_state.show_text_input = False
+        st.session_state.selected_option = "No selected"
+
+# Show text input if Yes is clicked
+if st.session_state.show_text_input:
+    api = st.text_input("Enter your OPEN AI API KEY")
+    st.markdown("Check out this [website](%s) to get your Open AI API code, if the original code doesn't work. " % "https://platform.openai.com/api-keys")
+    apikey  = st.text_input(
+    label="Enter your Open AI API",
+    placeholder="Type your Open AI API",
+    help  = " Use this link https://platform.openai.com/api-keys \n to get Open API key if original one doesn't work"
+    )   
+
+# Show selected option if No is clicked
+if st.session_state.selected_option:
+    st.write(st.session_state.selected_option)
 
 # Retrieve Open AI API
-st.write("#### ")
-st.markdown("Check out this [website](%s) to get your Open AI API code, if the original code doesn't work. " % "https://platform.openai.com/api-keys")
-apikey  = st.text_input(
-    label="Enter your ChatGPT API",
-    value = "Enter your ChatGPT API",
-    help  = " Use this link https://platform.openai.com/api-keys \n to get Open API key if original one doesn't work"
-)
+apikey = st.secrets["OPENAI_API_KEY"]
+
 #Make prompt for specific ticker you want to look up
 st.write("#### What stock do you want your DD on?")
 
