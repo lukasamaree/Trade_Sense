@@ -1,0 +1,139 @@
+import streamlit as st
+import pandas as pd
+import requests
+import os
+import finnhub
+import pandas
+from datetime import datetime, timedelta
+import re
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+import time
+from langchain_openai import ChatOpenAI
+from langchain_openai import ChatOpenAI
+from langchain.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from langchain_community.document_loaders import WebBaseLoader
+from langchain_core.documents import Document
+from langchain.chains.combine_documents import create_stuff_documents_chain
+from langchain_community.document_loaders import WebBaseLoader
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_openai import OpenAIEmbeddings
+from langchain_community.vectorstores.faiss import FAISS
+from langchain.chains import create_retrieval_chain
+from langchain.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from langchain_community.document_loaders import WebBaseLoader
+from play import *
+
+# Create path to the chrome driver so that we can webscrape
+path1 = "/Users/lukasamare/Desktop/chromedriver-mac-arm64/chromedriver"
+service= Service(executable_path=path1)
+
+# Retrieve original Finhubb API
+path = '/Users/lukasamare/Desktop/fall_module_1/communications/'
+if os.path.exists(path):
+    with open(path+'final_project/finhubb_api.txt','r') as file:
+        lukas_fin_api = file.read().strip()
+else:
+    lukas_fin_api = ''
+
+# Retrieve ChatGPT API Key
+with open("api_key", "r") as file:
+    apikey = file.read().strip()
+
+# Make Title for the streamlit app
+st.title("Due Diligance App")
+
+# Sign in to input finhubb api
+st.write("#### ")
+st.markdown("Check out this [website](%s) to get your free finhubb api code, if the original code doesn't work. " % "https://finnhub.io/register")
+finhubb_api  = st.text_input(
+    label="Enter your Finhubb API code",
+    value = lukas_fin_api,
+    help  = " Use this link https://finnhub.io/register \n to get free finhubb api code if original one doesn't work"
+)
+# Retrieve Open AI API
+st.write("#### ")
+st.markdown("Check out this [website](%s) to get your Open AI API code, if the original code doesn't work. " % "https://platform.openai.com/api-keys")
+apikey  = st.text_input(
+    label="Enter your ChatGPT API",
+    value = apikey,
+    help  = " Use this link https://platform.openai.com/api-keys \n to get Open API key if original one doesn't work"
+)
+#Make prompt for specific ticker you want to look up
+st.write("#### What stock do you want your DD on?")
+
+# Stock ticker Answer
+stock_ticker = st.text_input(
+    label="Enter your stock ticker:",
+    value="",
+    max_chars=50,
+    placeholder="Type your stock ticker here",
+    help="This is where you input your stock ticker"
+)
+
+# Retrieve Docs
+urls = retrieve_urls_for_docs(stock_ticker)
+
+# Webscrape Documents from the Web
+def get_documents_from_web(urls):
+    doc_lst = []
+    for url in urls:
+        loader =  WebBaseLoader(url)
+        docs = loader.load()
+        doc_lst.extend(docs)
+        # print(doc_lst)
+    splitter =  RecursiveCharacterTextSplitter(
+        chunk_size = 200
+    )
+    split_docs =  splitter.split_documents(doc_lst)
+    return split_docs
+
+docs  = get_documents_from_web(urls)
+
+# Create Vector Database
+def create_db(docs):
+    embedding =  OpenAIEmbeddings(api_key=apikey)
+    vector_store = FAISS.from_documents(docs,embedding=embedding)
+    return vector_store
+
+vectorStore = create_db(docs)
+    
+# Create Chain
+def create_chain(vectorStore):
+    llm1 = ChatOpenAI(api_key=apikey,
+    temperature = 0.2,
+    model = "gpt-4-turbo",
+    )
+    prompt = ChatPromptTemplate.from_messages(
+    [
+        ("system","You are an AI financial advisor. Give me recent sentiment and updated news on stock, is it bullish or bearish or in between. What are the goals of the company? What seperates this company from other companies from this market?"),
+        ("human", '{input}'),
+        ("user", '{context}')
+
+    ])
+    
+    chain = create_stuff_documents_chain(llm=llm1, prompt=prompt)
+
+    retriever = vectorStore.as_retriever(search_kwargs = {'k':10})
+    retrieval_chain = create_retrieval_chain(retriever, chain)
+    return retrieval_chain
+    
+
+chain = create_chain(vectorStore)
+
+response =  chain.invoke({"input" : stock_ticker})
+
+elapsed = time.time()
+
+if st.button("Enter"):
+    st.write("Summary: "+response["answer"])   
+
+print(time.time() - elapsed)
+
+
+
+
