@@ -78,7 +78,7 @@ with col1:
 with col2:
     if st.button("No"):
         st.session_state.show_text_input = False
-        st.session_state.selected_option = "Not selected"
+        st.session_state.selected_option = "This bum does not have an API key, GET YOUR BREAD UP AND PAY. jk I have one for you"
 
 # Show text input if Yes is clicked
 if st.session_state.show_text_input:
@@ -90,7 +90,7 @@ if st.session_state.show_text_input:
     )   
 
 # Show selected option if No is clicked
-if st.session_state.selected_option == "Not selected":
+if st.session_state.selected_option == "This bum does not have an API key, GET YOUR BREAD UP AND PAY. jk I have one for you":
     st.write(st.session_state.selected_option)
 
 # Retrieve Open AI API
