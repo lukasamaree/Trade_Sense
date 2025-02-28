@@ -32,6 +32,8 @@ from play import *
 path1 = "/Users/lukasamare/Desktop/chromedriver-mac-arm64/chromedriver"
 service= Service(executable_path=path1)
 
+path2 = "/Users/lukasamare/Desktop/random_project"
+
 # Retrieve original Finhubb API
 path = '/Users/lukasamare/Desktop/fall_module_1/communications/'
 if os.path.exists(path):
@@ -41,8 +43,11 @@ else:
     lukas_fin_api = ''
 
 # Retrieve ChatGPT API Key
-with open("api_key", "r") as file:
-    apikey = file.read().strip()
+if os.path.exist(path2):
+    with open("api_key", "r") as file:
+        apikey = file.read().strip()
+else:
+    apikey = st.secrets["OPENAI_API_KEY"]
 
 # Make Title for the streamlit app
 st.title("Due Diligance App")
